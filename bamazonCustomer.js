@@ -14,7 +14,7 @@ var connection = mySql.createConnection({
 // Include the ids, names, and prices of products for sale.
 connection.connect(function(err) {
     if (err) throw err;
-    console.log('you are connect as id ' + connection.threadId);
+    console.log('you are connected as id ' + connection.threadId);
     showAll();
 });
 
@@ -41,21 +41,28 @@ connection.connect(function(err) {
 function start() {
     inquirer
         .prompt([{
-                name: "itemSelection",
-                type: "input",
-                message: "What is the item identification number of the product you would like to purchase today?"
-            },
-            {
-                name: "quantity",
-                type: "input",
-                message: "How many would you like to buy?"
-            },
+            name: "itemSelection",
+            type: "input",
+            message: "What is the item identification number of the product you would like to purchase today?"
+        }])
+        .then(function(answer) {
+            var query = "SELECT item_id, product_name FROM bamazonDB WHERE ?";
+            connection.query(query, { item_id: answer.item_id }, function(err, res) {
+                for (var i = 0; i < res.length; i++) {
+                    console.log("Item ID: " + res[i].item_id + " && Product: " + res[i].product_name);
+                }
+                runSearch();
+            });
+        });
+};
 
-        ])
-        // Once the customer has placed the order, your application should check if your
-        // store has enough of the product to meet the customer's request.If not, the app
-        // should log a phrase like `Insufficient quantity!`, and then prevent the order from going through.
-        // However, if your store _does_ have enough of the product, you should fulfill the customer's order.
-        // This means updating the SQL database to reflect the remaining quantity.
-        // Once the update goes through, show the customer the total cost of their purchase.
-}
+//* The second message should ask how many units of the product they would like to buy.
+
+
+
+// Once the customer has placed the order, your application should check if your
+// store has enough of the product to meet the customer's request.If not, the app
+// should log a phrase like `Insufficient quantity!`, and then prevent the order from going through.
+// However, if your store _does_ have enough of the product, you should fulfill the customer's order.
+// This means updating the SQL database to reflect the remaining quantity.
+// Once the update goes through, show the customer the total cost of their purchase.
