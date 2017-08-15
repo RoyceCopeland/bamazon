@@ -1,4 +1,4 @@
-CREATE DATABASE bamazon;
+CREATE DATABASE bamazonDB;
 USE bamazon;
 
 CREATE TABLE products(
@@ -11,31 +11,31 @@ CREATE TABLE products(
 );
 
 INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Frisbee', 'Outdoor Sports', '$8.00', 13);
+    VALUES (288, 'Frisbee', 'Outdoor Sports', '$8.00', 13);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Golf Balls', 'Outdoor Sports', '$25.00', 10);
+    VALUES (837, 'Golf Balls', 'Outdoor Sports', '$25.00', 10);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Sleeping Bag', 'Camping', '$45.00', 6);
+    VALUES (174, 'Sleeping Bag', 'Camping', '$45.00', 6);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Cowboy Hat', 'Headwear', '$75.00', 4);
+    VALUES (395, 'Cowboy Hat', 'Headwear', '$75.00', 0);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Flip Flops', 'Footwear', '$22.00', 15);
+    VALUES (853, 'Flip Flops', 'Footwear', '$22.00', 15);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Calculator', 'Gadgets', '$5.00', 21);
+    VALUES (937, 'Calculator', 'Gadgets', '$5.00', 21);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Dog Collar', 'Pet Items', '$8.00', 9);
+    VALUES (168, 'Dog Collar', 'Pet Items', '$8.00', 9);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Cat Food', 'Pet Items', '$11.00', 17);
+    VALUES (729, 'Cat Food', 'Pet Items', '$11.00', 17);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Dog Bed', 'Pet Items', '$36.00', 12);
+    VALUES (367, 'Dog Bed', 'Pet Items', '$36.00', 12);
 
     INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-    VALUES (001, 'Baseball Glove', 'Outdoor Sports', '$44.00', 12);
+    VALUES (929, 'Baseball Glove', 'Outdoor Sports', '$44.00', 12);
