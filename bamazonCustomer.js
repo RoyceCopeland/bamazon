@@ -79,36 +79,55 @@ function runStartShopping() {
             ]
         })
         .then(function(answer) {
-            switch (answer.action) {
-                case "Yes":
+            //  console.log(answer);
+            switch (answer.itemSelection) {
+
+                case true:
                     console.log("Awesome!")
                     itemSearch();
                     break;
 
-                case "No":
+                case false:
                     console.log("That's cool - see ya next time.");
+                    break;
 
             }
         });
 }
 
-//function itemSearch() {
-//    inquirer
-//        .prompt({
-//            name: "item",
-//            type: "input",
-//            message: "Awesome! What is the product ID number of the item you would like to purchase today?"
-//        })
-//        .then(function(answer) {
-//            var query = "SELECT position, song, year FROM products WHERE ?";
-//            connection.query(query, { artist: answer.artist }, function(err, res) {
-//                for (var i = 0; i < res.length; i++) {
-//                    console.log("Position: " + res[i].position + " || Song: " + res[i].song + " || Year: " + res[i].year);
-//                }
-//                runSearch();
-//            });
-//        });
-//}
+function itemSearch() {
+    inquirer
+        .prompt([{
+                name: "item",
+                type: "input",
+                message: "What is the product ID number of the item you would like to purchase today?"
+            },
+
+            {
+                name: "quantity",
+                type: "input",
+                message: "... and how many of these would you like?"
+            }
+
+        ])
+        .then(function(answer) {
+            var query = "SELECT * FROM products WHERE ?";
+            connection.query(query, { item_id: answer.item }, function(err, res) {
+                    //    for (var i = 0; i < res.length; i++) {
+                    console.log("You chose " + (answer.quantity) + " of the: " + (res[0].product_name));
+                    if (answer.quantity < res[0].stock_quantity) {
+                        console.log("We have plenty in stock!");
+                    } else {
+                        console.log("Sorry, we don't have that many :(");
+                    }
+                })
+                //                            runSearch();
+
+
+
+
+        });
+}
 
 
 
