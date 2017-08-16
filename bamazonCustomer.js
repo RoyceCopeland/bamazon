@@ -15,22 +15,31 @@ var connection = mySql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     console.log('you are connected as id ' + connection.threadId);
-    showAll();
+
 });
 
-function showALL() {
-    connection.query('SELECT * FROM bamazonDB', function(err, res) {
+function showAll() {
+    connection.query('SELECT * FROM products', function(err, res) {
         if (err) throw err;
-        console.log(res);
-    });
+        console.log('==================================================================');
+        console.log('================= Here Are Our Items For Sale ! ==================');
+        console.log('==================================================================');
+        for (i = 0; i < res.length; i++) {
+            console.log('Product ID #:' + res[i].item_id + '   Product Name: ' + res[i].product_name + '   Price: ' + '$' + res[i].price + '  (Quantity left: ' + res[i].stock_quantity + ')')
+        }
+        console.log('=================================================');
+        //placeOrder();
+    })
 }
+showAll();
+
 
 // connect to the mysql server and sql database
-connection.connect(function(err) {
-    if (err) throw err;
-    // run the start function after the connection is made to prompt the user
-    start();
-});
+// connection.connect(function(err) {
+// if (err) throw err;
+// run the start function after the connection is made to prompt the user
+// start();
+// });
 
 //The app should then prompt users with two messages.
 
@@ -38,23 +47,23 @@ connection.connect(function(err) {
 //* The second message should ask how many units of the product they would like to buy.
 
 // function which prompts the user for what action they should take
-function start() {
-    inquirer
-        .prompt([{
-            name: "itemSelection",
-            type: "input",
-            message: "What is the item identification number of the product you would like to purchase today?"
-        }])
-        .then(function(answer) {
-            var query = "SELECT item_id, product_name FROM bamazonDB WHERE ?";
-            connection.query(query, { item_id: answer.item_id }, function(err, res) {
-                for (var i = 0; i < res.length; i++) {
-                    console.log("Item ID: " + res[i].item_id + " && Product: " + res[i].product_name);
-                }
-                runSearch();
-            });
-        });
-};
+//      function start() {
+//          inquirer
+//              .prompt([{
+//                  name: "itemSelection",
+//                  type: "input",
+//                  message: "What is the item identification number of the product you would like to purchase today?"
+//              }])
+//              .then(function(answer) {
+//                  var query = "SELECT item_id, product_name FROM bamazonDB WHERE ?";
+//                  connection.query(query, { item_id: answer.item_id }, function(err, res) {
+//                      for (var i = 0; i < res.length; i++) {
+//                          console.log("Item ID: " + res[i].item_id + " && Product: " + res[i].product_name);
+//                      }
+//                      runSearch();
+//                  });
+//              });
+//      };
 
 //* The second message should ask how many units of the product they would like to buy.
 
