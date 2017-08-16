@@ -19,6 +19,7 @@ connection.connect(function(err) {
 
 });
 
+
 function showAll() {
     connection.query('SELECT * FROM products', function(err, res) {
         if (err) throw err;
@@ -34,7 +35,8 @@ function showAll() {
 }
 showAll();
 
-
+// delay the first inquiry until after the product list loads (utilizes the "delayed" module from npm)
+delayed.delay(function() { runStartShopping(); }, 1000)
 
 // run the start function after the connection is made to prompt the user
 // start();
@@ -46,32 +48,68 @@ showAll();
 //* The second message should ask how many units of the product they would like to buy.
 
 // function which prompts the user for what action they should take
-function start() {
+//     function start() {
+//         inquirer
+//             .prompt([{
+//                 name: "itemSelection",
+//                 type: "input",
+//                 message: "What is the product ID number of the item you would like to purchase today?"
+//             }])
+//             .then(function(answer) {
+//                 var query = "SELECT item_id, product_name FROM bamazonDB WHERE ?";
+//                 connection.query(query, { item_id: answer.item_id }, function(err, res) {
+//                     for (var i = 0; i < res.length; i++) {
+//                         console.log("Item ID: " + res[i].item_id + " && Product: " + res[i].product_name);
+//                     }
+//                     runSearch();
+//                 });
+//             });
+//     };
+
+
+function runStartShopping() {
     inquirer
-        .prompt([{
+        .prompt({
             name: "itemSelection",
-            type: "input",
-            message: "What is the product ID number of the item you would like to purchase today?"
-        }])
+            type: "confirm",
+            message: "Welcome to Bamazon! Are you ready to shop?",
+            choices: [
+                "Yes",
+                "No",
+            ]
+        })
         .then(function(answer) {
-            var query = "SELECT item_id, product_name FROM bamazonDB WHERE ?";
-            connection.query(query, { item_id: answer.item_id }, function(err, res) {
-                for (var i = 0; i < res.length; i++) {
-                    console.log("Item ID: " + res[i].item_id + " && Product: " + res[i].product_name);
-                }
-                runSearch();
-            });
+            switch (answer.action) {
+                case "Yes":
+                    console.log("Awesome!")
+                    itemSearch();
+                    break;
+
+                case "No":
+                    console.log("That's cool - see ya next time.");
+
+            }
         });
-};
+}
 
+//function itemSearch() {
+//    inquirer
+//        .prompt({
+//            name: "item",
+//            type: "input",
+//            message: "Awesome! What is the product ID number of the item you would like to purchase today?"
+//        })
+//        .then(function(answer) {
+//            var query = "SELECT position, song, year FROM products WHERE ?";
+//            connection.query(query, { artist: answer.artist }, function(err, res) {
+//                for (var i = 0; i < res.length; i++) {
+//                    console.log("Position: " + res[i].position + " || Song: " + res[i].song + " || Year: " + res[i].year);
+//                }
+//                runSearch();
+//            });
+//        });
+//}
 
-// delay the first inquiry until after the product list loads (utilizes the "delayed" module from npm)
-delayed.delay(function() { start(); }, 1000)
-
-//function print(a, b) { console.log(this[a], this[b]) }
-//delayed.delay(print, 5000, { 'foo': 'Hello', 'bar': 'world' }, 'foo', 'bar')
-// after 5 seconds, `print` is executed with the 3rd argument as `this` 
-// and the 4th and 5th as the arguments 
 
 
 
