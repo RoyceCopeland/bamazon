@@ -47,25 +47,6 @@ delayed.delay(function() { runStartShopping(); }, 1000)
 //* The first should ask them the ID of the product they would like to buy.
 //* The second message should ask how many units of the product they would like to buy.
 
-// function which prompts the user for what action they should take
-//     function start() {
-//         inquirer
-//             .prompt([{
-//                 name: "itemSelection",
-//                 type: "input",
-//                 message: "What is the product ID number of the item you would like to purchase today?"
-//             }])
-//             .then(function(answer) {
-//                 var query = "SELECT item_id, product_name FROM bamazonDB WHERE ?";
-//                 connection.query(query, { item_id: answer.item_id }, function(err, res) {
-//                     for (var i = 0; i < res.length; i++) {
-//                         console.log("Item ID: " + res[i].item_id + " && Product: " + res[i].product_name);
-//                     }
-//                     runSearch();
-//                 });
-//             });
-//     };
-
 
 function runStartShopping() {
     inquirer
@@ -113,15 +94,27 @@ function itemSearch() {
         .then(function(answer) {
             var query = "SELECT * FROM products WHERE ?";
             connection.query(query, { item_id: answer.item }, function(err, res) {
-                    //    for (var i = 0; i < res.length; i++) {
-                    console.log("You chose " + (answer.quantity) + " of the: " + (res[0].product_name));
-                    if (answer.quantity < res[0].stock_quantity) {
-                        console.log("We have plenty in stock!");
-                    } else {
-                        console.log("Sorry, we don't have that many :(");
-                    }
-                })
-                //                            runSearch();
+                // for (var i = 0; i < res.length; i++) {
+                console.log("You chose " + (answer.quantity) + " of the: " + (res[0].product_name));
+                if (answer.quantity < res[0].stock_quantity) {
+                    console.log("We have that in stock!");
+                    var newStockQuantity = (res[0].stock_quantity - answer.quantity);
+                    // update the database here  (update query w sql) 
+
+                    var sql = "UPDATE products SET stock_quantity = " + newStockQuantity + " WHERE item_id = " + answer.item;
+                    connection.query(sql, function(err, result) {
+                        if (err) throw err;
+                        console.log(result.affectedRows + " record(s) updated");
+                        console.log(result);
+                    });
+
+                } else {
+                    console.log("Sorry, we don't have that many :(");
+                }
+
+
+
+            })
 
 
 
