@@ -17,4 +17,4 @@ An interactive shopping app using MySQL and Node.JS to allow users to purchase i
 ![alt text](https://github.com/RoyceCopeland/bamazon/blob/master/user%20flow%20screenshots/shopping_interaction.png)
 
 
-![alt text](https://github.com/RoyceCopeland/bamazon/blob/master/inventory_after.png)
+![alt text](https://github.com/RoyceCopeland/bamazon/blob/master/user%20flow%20screenshots/inventory_after.png)
